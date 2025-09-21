@@ -14,9 +14,7 @@ async function main() {
   const privateKey = process.env.SEPOLIA_PRIVATE_KEY;
 
   if (!rpcUrl || !privateKey) {
-    throw new Error(
-      "❌ Please specify SEPOLIA_RPC_URL and SEPOLIA_PRIVATE_KEY in .env"
-    );
+    throw new Error("❌ Missing SEPOLIA_RPC_URL or SEPOLIA_PRIVATE_KEY");
   }
 
   const provider = new ethers.JsonRpcProvider(rpcUrl);
