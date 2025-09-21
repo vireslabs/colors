@@ -47,7 +47,9 @@ async function mintNFT() {
     const signer = await provider.getSigner();
     const contract = new ethers.Contract(contractAddress, abi, signer);
     status.value = "Sending transaction...";
-    const tx = await contract.mint(color.value);
+    const tx = await contract.mint(color.value, {
+      value: parseEther("0.001"), // mintPrice = 0.001 ether
+    });
     await tx.wait();
     status.value = `NFT minted! Address: ${address.value}`;
   } catch (err) {
