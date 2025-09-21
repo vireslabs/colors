@@ -10,6 +10,7 @@ contract ColorsNFT is ERC721, Ownable {
     using Strings for uint256;
 
     uint256 public nextTokenId = 1;
+    uint256 public mintPrice = 0.001 ether;
 
     mapping(uint256 => string) private _colorOf;
 
@@ -21,7 +22,8 @@ contract ColorsNFT is ERC721, Ownable {
         Ownable(initialOwner)
     {}
 
-    function mint(string calldata hexColor) external {
+    function mint(string calldata hexColor) external payable {
+        require(msg.value == mintPrice, "Incorrect ETH amount");
         require(_isValidHexColor(hexColor), "Invalid color, expected #RRGGBB");
 
         string memory normalized = _toLower(hexColor);
@@ -39,6 +41,15 @@ contract ColorsNFT is ERC721, Ownable {
 
     function setUniqueColors(bool value) external onlyOwner {
         uniqueColors = value;
+    }
+
+    function setMintPrice(uint256 newPrice) external onlyOwner {
+        mintPrice = newPrice;
+    }
+
+    function withdraw(address payable to) external onlyOwner {
+        require(address(this).balance > 0, "No funds");
+        to.transfer(address(this).balance);
     }
 
     function colorOf(uint256 tokenId) public view returns (string memory) {
