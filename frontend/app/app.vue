@@ -1,97 +1,106 @@
 <template>
   <client-only>
-    <div class="max-w-5xl mx-auto mt-10 px-4 flex flex-col gap-6 items-center">
-      <div>
-        <div class="flex justify-between my-3">
-          <h1 class="text-3xl font-bold">Crypto Colors</h1>
-          <!-- Connect button -->
-          <appkit-button v-if="isConnected" label="Connect Wallet" />
-        </div>
-        <!-- 🎨 Color Picker -->
-        <div class="flex flex-col items-center gap-4">
-          <div class="relative">
-            <canvas
-              ref="paletteRef"
-              width="500"
-              height="300"
-              class="rounded-lg cursor-crosshair"
-              @mousedown="onMouseDown"
-            />
+    <div class="relative min-h-screen overflow-hidden">
+      <div
+        class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_center,_#ff0607,_#ff8c00,_#ffff00,_#00ff00,_#00cfff,_#0000ff,_#8a2be2,_#ed84ed)] bg-[length:400%_400%] animate-gradient-chaos"
+      ></div>
+      <div
+        class="rounded-2xl bg-white/70 backdrop-blur-md border border-white/30 shadow-lg max-w-5xl w-fit mx-auto mt-10 px-10 flex flex-col gap-6 items-center"
+      >
+        <div class="my-6">
+          <div class="flex justify-between mb-3">
+            <h1 class="text-3xl font-bold">Book of Colors</h1>
+            <!-- Connect button -->
+            <appkit-button v-if="isConnected" label="Connect Wallet" />
+          </div>
+          <!-- 🎨 Color Picker -->
+          <div class="flex flex-col items-center gap-4">
+            <div class="relative">
+              <canvas
+                ref="paletteRef"
+                width="500"
+                height="300"
+                class="rounded-lg cursor-crosshair"
+                @mousedown="onMouseDown"
+              />
 
-            <!-- 🔘 Marker -->
+              <!-- 🔘 Marker -->
+              <div
+                class="absolute w-4 h-4 rounded-full border-2 border-white shadow"
+                :style="{
+                  left: marker.x - 8 + 'px',
+                  top: marker.y - 8 + 'px',
+                  backgroundColor: color,
+                }"
+              ></div>
+            </div>
+          </div>
+
+          <!-- 🪙 Mint Controls -->
+          <div class="flex flex-row justify-between my-3">
             <div
-              class="absolute w-4 h-4 rounded-full border-2 border-white shadow"
-              :style="{
-                left: marker.x - 8 + 'px',
-                top: marker.y - 8 + 'px',
-                backgroundColor: color,
-              }"
-            ></div>
-          </div>
-        </div>
+              class="flex justify-center place-items-center my-auto w-40 h-10 font-semibold border rounded-sm"
+            >
+              {{ color }}
+            </div>
 
-        <!-- 🪙 Mint Controls -->
-        <div class="flex flex-row justify-between my-3">
+            <button
+              @click="pickRandomColor"
+              class="my-auto text-xl px-3 py-1.5 rounded-sm border hover:bg-gray-100 cursor-pointer"
+            >
+              🤪
+            </button>
+
+            <!-- Connect button -->
+            <button
+              v-if="!isConnected"
+              class="px-10 py-2 font-bold rounded-sm border hover:bg-gray-100 cursor-pointer"
+              @click="openConnectModal"
+            >
+              Connect Wallet
+            </button>
+
+            <!-- Mint button -->
+            <button
+              v-if="isConnected"
+              class="flex justify-center place-items-center my-auto w-60 h-10 font-semibold border rounded-sm hover:bg-gray-100 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+              :disabled="
+                !isConnected || isMinting || availability !== '✅ Available'
+              "
+              @click="mintNFT"
+            >
+              {{ isMinting ? "Minting..." : "Buy for 0.001ETH" }}
+            </button>
+          </div>
+
+          <div v-if="status" class="flex justify-center font-semibold my-3">
+            {{ status }}
+          </div>
+
           <div
-            class="flex justify-center place-items-center my-auto w-40 h-10 font-semibold border rounded-sm"
-          >
-            {{ color }}
-          </div>
-
-          <button
-            @click="pickRandomColor"
-            class="my-auto text-xl px-3 py-1.5 rounded-sm border hover:bg-gray-100 cursor-pointer"
-          >
-            🤪
-          </button>
-
-          <!-- Connect button -->
-          <button
-            v-if="!isConnected"
-            class="px-10 py-2 font-bold rounded-sm border hover:bg-gray-100 cursor-pointer"
-            @click="openConnectModal"
-          >
-            Connect Wallet
-          </button>
-
-          <!-- Mint button -->
-          <button
-            v-if="isConnected"
-            class="flex justify-center place-items-center my-auto w-60 h-10 font-semibold border rounded-sm hover:bg-gray-100 disabled:opacity-60 disabled:cursor-not-allowed"
-            :disabled="
-              !isConnected || isMinting || availability !== '✅ Available'
+            v-if="availability !== '✅ Available'"
+            class="flex justify-center font-semibold"
+            :class="
+              availability === '✅ Available'
+                ? 'text-green-600'
+                : 'text-red-600'
             "
-            @click="mintNFT"
           >
-            {{ isMinting ? "Minting..." : "Buy for 0.001ETH" }}
-          </button>
-        </div>
-
-        <div v-if="status" class="flex justify-center font-semibold my-3">
-          {{ status }}
-        </div>
-
-        <div
-          v-if="availability !== '✅ Available'"
-          class="flex justify-center font-semibold"
-          :class="
-            availability === '✅ Available' ? 'text-green-600' : 'text-red-600'
-          "
-        >
-          <div v-if="ownerNFT" class="mx-1 mb-3">
-            {{ availability }}
-            {{
-              ownerNFT.slice(0, 6) +
-              "..." +
-              ownerNFT.slice(ownerNFT.length - 6, ownerNFT.length)
-            }}
+            <div v-if="ownerNFT" class="mx-1 mb-3">
+              {{ availability }}
+              {{
+                ownerNFT.slice(0, 6) +
+                "..." +
+                ownerNFT.slice(ownerNFT.length - 6, ownerNFT.length)
+              }}
+            </div>
           </div>
+          <!-- 🖼 Preview square -->
+          <div
+            class="w-[500px] h-[500px] rounded-xl shadow-lg border border-gray-200"
+            :style="{ backgroundColor: color }"
+          />
         </div>
-        <!-- 🖼 Preview square -->
-        <div
-          class="w-[500px] h-[500px] rounded-xl shadow-lg border border-gray-200"
-          :style="{ backgroundColor: color }"
-        />
       </div>
     </div>
   </client-only>
