@@ -13,6 +13,9 @@
             <!-- Connect button -->
             <appkit-button v-if="isConnected" label="Connect Wallet" />
           </div>
+          <div class="border-double border-l-2 px-2 my-2">
+            The 1/1 collection for every color on the internet.
+          </div>
           <!-- 🎨 Color Picker -->
           <div class="flex flex-col items-center gap-4">
             <div class="relative">
@@ -39,14 +42,21 @@
           <!-- 🪙 Mint Controls -->
           <div class="flex flex-row justify-between my-3">
             <div
-              class="flex justify-center place-items-center my-auto w-40 h-10 font-semibold border rounded-sm"
+              class="flex justify-center place-items-center my-auto w-40 h-10 font-semibold border rounded-sm shadow-xl bg-white"
             >
               {{ color }}
             </div>
 
+            <a
+              href=""
+              class="my-auto text-xl px-3 py-1.5 rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
+            >
+              🖼️
+            </a>
+
             <button
               @click="pickRandomColor"
-              class="my-auto text-xl px-3 py-1.5 rounded-sm border hover:bg-gray-100 cursor-pointer"
+              class="my-auto text-xl px-3 py-1.5 rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
             >
               🤪
             </button>
@@ -54,7 +64,7 @@
             <!-- Connect button -->
             <button
               v-if="!isConnected"
-              class="px-10 py-2 font-bold rounded-sm border hover:bg-gray-100 cursor-pointer"
+              class="px-10 py-2 font-bold rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
               @click="openConnectModal"
             >
               Connect Wallet
@@ -63,7 +73,7 @@
             <!-- Mint button -->
             <button
               v-if="isConnected"
-              class="flex justify-center place-items-center my-auto w-60 h-10 font-semibold border rounded-sm hover:bg-gray-100 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+              class="flex justify-center place-items-center my-auto w-60 h-10 font-semibold border rounded-sm hover:bg-gray-100 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed shadow-xl bg-white/80"
               :disabled="
                 !isConnected || isMinting || availability !== '✅ Available'
               "
