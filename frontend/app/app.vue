@@ -182,12 +182,16 @@ watch(color, async newColor => {
     const signer = await provider.getSigner();
     const contract = new Contract(contractAddress, abi, signer);
 
-    await contract.callStatic.mint(newColor, {
-      value: await contract.mintPrice(),
-    });
-    availability.value = "✅ Available";
-  } catch {
-    availability.value = "❌ Taken";
+    const taken = await contract.isColorTaken(newColor);
+    if (taken) {
+      const owner = await contract.ownerOfColor(newColor);
+      availability.value = `❌ Taken by ${owner}`;
+    } else {
+      availability.value = "✅ Available";
+    }
+  } catch (err) {
+    console.error("Error checking color:", err);
+    availability.value = "⚠️ Error";
   }
 });
 
