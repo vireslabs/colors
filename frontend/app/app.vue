@@ -1,11 +1,12 @@
 <template>
   <client-only>
     <div class="max-w-5xl mx-auto mt-10 px-4 flex flex-col gap-6 items-center">
-      <h1 class="text-3xl font-bold">Crypto Colors</h1>
-      <!-- Connect button -->
-      <appkit-button v-if="isConnected" label="Connect Wallet" />
-
       <div>
+        <div class="flex justify-between my-3">
+          <h1 class="text-3xl font-bold">Crypto Colors</h1>
+          <!-- Connect button -->
+          <appkit-button v-if="isConnected" label="Connect Wallet" />
+        </div>
         <!-- 🎨 Color Picker -->
         <div class="flex flex-col items-center gap-4">
           <div class="relative">
@@ -32,10 +33,17 @@
         <!-- 🪙 Mint Controls -->
         <div class="flex flex-row justify-between my-3">
           <div
-            class="my-auto font-semibold px-10 py-2 font-bold rounded-sm border"
+            class="flex justify-center place-items-center my-auto w-40 h-10 font-semibold border rounded-sm"
           >
             {{ color }}
           </div>
+
+          <button
+            @click="pickRandomColor"
+            class="my-auto text-xl px-3 py-1.5 rounded-sm border hover:bg-gray-100 cursor-pointer"
+          >
+            🤪
+          </button>
 
           <!-- Connect button -->
           <appkit-button v-if="!isConnected" label="Connect Wallet" />
@@ -50,7 +58,7 @@
           <!-- Mint button -->
           <button
             v-if="isConnected"
-            class="px-10 py-2 font-bold rounded-sm border hover:bg-gray-100 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+            class="flex justify-center place-items-center my-auto w-60 h-10 font-semibold border rounded-sm hover:bg-gray-100 disabled:opacity-60 disabled:cursor-not-allowed"
             :disabled="
               !isConnected || isMinting || availability !== '✅ Available'
             "
@@ -66,12 +74,19 @@
 
         <div
           v-if="availability !== '✅ Available'"
-          class="flex justify-center"
+          class="flex justify-center font-semibold"
           :class="
             availability === '✅ Available' ? 'text-green-600' : 'text-red-600'
           "
         >
-          {{ availability }}
+          <div v-if="ownerNFT" class="mx-1 mb-3">
+            {{ availability }}
+            {{
+              ownerNFT.slice(0, 6) +
+              "..." +
+              ownerNFT.slice(ownerNFT.length - 6, ownerNFT.length)
+            }}
+          </div>
         </div>
         <!-- 🖼 Preview square -->
         <div
@@ -107,6 +122,9 @@ const paletteRef = ref(null);
 // Availability state
 const availability = ref(""); // "✅ Available" | "❌ Taken"
 
+// Owner state
+const ownerNFT = ref("");
+
 // Mint state
 const status = ref("");
 const isMinting = ref(false);
@@ -119,6 +137,14 @@ function updateColor(canvas, x, y) {
     .map(c => c.toString(16).padStart(2, "0"))
     .join("")}`;
   marker.value = { x, y };
+}
+
+function pickRandomColor() {
+  const canvas = paletteRef.value;
+  if (!canvas) return;
+  const randomX = Math.floor(Math.random() * canvas.width);
+  const randomY = Math.floor(Math.random() * canvas.height);
+  updateColor(canvas, randomX, randomY);
 }
 
 function onMouseDown(e) {
@@ -198,7 +224,8 @@ watch(color, async newColor => {
     const taken = await contract.isColorTaken(newColor);
     if (taken) {
       const owner = await contract.ownerOfColor(newColor);
-      availability.value = `❌ Taken by ${owner}`;
+      availability.value = `❌ Taken by`;
+      ownerNFT.value = owner;
     } else {
       availability.value = "✅ Available";
     }
