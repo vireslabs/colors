@@ -46,14 +46,13 @@
           </button>
 
           <!-- Connect button -->
-          <appkit-button v-if="!isConnected" label="Connect Wallet" />
-
-          <!-- <button
+          <button
+            v-if="!isConnected"
             class="px-10 py-2 font-bold rounded-sm border hover:bg-gray-100 cursor-pointer"
             @click="openConnectModal"
           >
             Connect Wallet
-          </button> -->
+          </button>
 
           <!-- Mint button -->
           <button
@@ -68,7 +67,7 @@
           </button>
         </div>
 
-        <div v-if="status" class="flex justify-center my-3">
+        <div v-if="status" class="flex justify-center font-semibold my-3">
           {{ status }}
         </div>
 
@@ -101,7 +100,7 @@
 <script setup>
 import { ref, computed, onMounted, watch, nextTick } from "vue";
 import { BrowserProvider, Contract } from "ethers";
-import { useAppKitAccount } from "@reown/appkit/vue";
+import { useAppKitAccount, useAppKit } from "@reown/appkit/vue";
 import abi from "../abi/ColorsNFT.json";
 
 // 🔌 Account info
@@ -137,6 +136,7 @@ function updateColor(canvas, x, y) {
     .map(c => c.toString(16).padStart(2, "0"))
     .join("")}`;
   marker.value = { x, y };
+  status.value = "";
 }
 
 function pickRandomColor() {
@@ -178,6 +178,11 @@ function moveMarker(e) {
   );
   updateColor(canvas, x, y);
 }
+
+const openConnectModal = () => {
+  const { open } = useAppKit();
+  open({ view: "Connect" });
+};
 
 onMounted(async () => {
   await nextTick();
