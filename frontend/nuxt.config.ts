@@ -13,4 +13,12 @@ export default defineNuxtConfig({
       contractAddress: process.env.NUXT_PUBLIC_CONTRACT_ADDRESS,
     },
   },
+  app: {
+    head: {
+      title: "Monad Colors",
+      htmlAttrs: {
+        lang: "en",
+      },
+    },
+  },
 });

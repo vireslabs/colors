@@ -11,8 +11,8 @@ export default defineNuxtPlugin(() => {
     networks: [mainnet, arbitrum, sepolia],
     projectId: config.public.projectId,
     metadata: {
-      name: "My Nuxt App",
-      description: "My Nuxt App description",
+      name: "Monad Colors",
+      description: "The 1/1 collection for every color on the internet",
       url: "https://mywebsite.com",
       icons: ["https://avatars.mywebsite.com/"],
     },
