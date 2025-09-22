@@ -16,6 +16,9 @@ contract ColorsNFT is ERC721, Ownable {
 
     bool public uniqueColors = true;
     mapping(bytes32 => bool) private _colorTaken;
+    mapping(bytes32 => uint256) private _colorToTokenId;
+
+    event ColorMinted(address indexed owner, uint256 indexed tokenId, string color);
 
     constructor(address initialOwner)
         ERC721("colorsNFT", "COLORS")
@@ -37,6 +40,11 @@ contract ColorsNFT is ERC721, Ownable {
         uint256 tokenId = nextTokenId++;
         _safeMint(msg.sender, tokenId);
         _colorOf[tokenId] = normalized;
+
+        bytes32 key2 = keccak256(bytes(normalized));
+        _colorToTokenId[key2] = tokenId;
+
+        emit ColorMinted(msg.sender, tokenId, normalized);
     }
 
     function setUniqueColors(bool value) external onlyOwner {
@@ -120,5 +128,17 @@ contract ColorsNFT is ERC721, Ownable {
             }
         }
         return string(out);
+    }
+
+    function isColorTaken(string calldata hexColor) external view returns (bool) {
+        string memory normalized = _toLower(hexColor);
+        return _colorTaken[keccak256(bytes(normalized))];
+    }
+
+    function ownerOfColor(string calldata hexColor) external view returns (address) {
+        string memory normalized = _toLower(hexColor);
+        uint256 tokenId = _colorToTokenId[keccak256(bytes(normalized))];
+        if (tokenId == 0) return address(0);
+        return ownerOf(tokenId);
     }
 }

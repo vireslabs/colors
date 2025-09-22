@@ -191,6 +191,31 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "color",
+        "type": "string"
+      }
+    ],
+    "name": "ColorMinted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "previousOwner",
         "type": "address"
       },
@@ -336,6 +361,25 @@
         "type": "string"
       }
     ],
+    "name": "isColorTaken",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "hexColor",
+        "type": "string"
+      }
+    ],
     "name": "mint",
     "outputs": [],
     "stateMutability": "payable",
@@ -402,6 +446,25 @@
       }
     ],
     "name": "ownerOf",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "hexColor",
+        "type": "string"
+      }
+    ],
+    "name": "ownerOfColor",
     "outputs": [
       {
         "internalType": "address",
