@@ -5,15 +5,19 @@
         class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_center,_#ff0607,_#ff8c00,_#ffff00,_#00ff00,_#00cfff,_#0000ff,_#8a2be2,_#ed84ed)] bg-[length:400%_400%] animate-gradient-chaos"
       ></div>
       <div
-        class="rounded-2xl bg-white/70 backdrop-blur-md border border-white/30 shadow-lg max-w-5xl w-fit mx-auto mt-10 px-10 flex flex-col gap-6 items-center"
+        class="rounded-2xl bg-white/70 backdrop-blur-md border border-white/30 shadow-lg max-w-5xl w-fit mx-auto my-10 px-10 flex flex-col gap-6 items-center"
       >
         <div class="my-6">
           <div class="flex justify-between mb-3">
-            <h1 class="text-3xl font-bold">Book of Colors</h1>
+            <h1
+              class="text-3xl font-bold text-transparent bg-clip-text drop-shadow-xl text-shadow-md uppercase bg-[radial-gradient(circle_at_center,_#ff0607,_#ff8c00,_#ffff00,_#00ff00,_#00cfff,_#0000ff,_#8a2be2,_#ed84ed)]"
+            >
+              Monad Colors
+            </h1>
             <!-- Connect button -->
             <appkit-button v-if="isConnected" label="Connect Wallet" />
           </div>
-          <div class="border-double border-l-2 px-2 my-2">
+          <div class="border-double border-l-2 p-2 my-2 bg-white/30">
             The 1/1 collection for every color on the internet.
           </div>
           <!-- 🎨 Color Picker -->
@@ -49,14 +53,14 @@
 
             <a
               href=""
-              class="my-auto text-xl px-3 py-1.5 rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
+              class="flex justify-center place-items-center my-auto text-xl w-10 h-10 rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
             >
               🖼️
             </a>
 
             <button
               @click="pickRandomColor"
-              class="my-auto text-xl px-3 py-1.5 rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
+              class="flex justify-center place-items-center my-auto text-xl w-10 h-10 rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
             >
               🤪
             </button>
@@ -132,7 +136,7 @@ const config = useRuntimeConfig();
 const contractAddress = config.public.contractAddress;
 
 // 🎨 Color Picker state
-const color = ref("#000000");
+const color = ref("#836EF9");
 const marker = ref({ x: 150, y: 150 });
 const isDragging = ref(false);
 const paletteRef = ref(null);
