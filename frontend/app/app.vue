@@ -1,10 +1,9 @@
 <template>
   <client-only>
     <div class="max-w-5xl mx-auto mt-10 px-4 flex flex-col gap-6 items-center">
-      <h1 class="text-3xl font-bold">ColorsNFT Mint</h1>
-
+      <h1 class="text-3xl font-bold">Crypto Colors</h1>
       <!-- Connect button -->
-      <appkit-button label="Connect Wallet" />
+      <appkit-button v-if="isConnected" label="Connect Wallet" />
 
       <div>
         <!-- 🎨 Color Picker -->
@@ -12,7 +11,7 @@
           <div class="relative">
             <canvas
               ref="paletteRef"
-              width="300"
+              width="500"
               height="300"
               class="rounded-lg cursor-crosshair"
               @mousedown="onMouseDown"
@@ -28,43 +27,57 @@
               }"
             ></div>
           </div>
-
-          <p class="text-lg">
-            Selected color: <span class="font-mono">{{ color }}</span>
-          </p>
-          <p
-            v-if="availability"
-            class="text-sm"
-            :class="
-              availability === '✅ Available'
-                ? 'text-green-600'
-                : 'text-red-600'
-            "
-          >
-            {{ availability }}
-          </p>
         </div>
 
-        <!-- 🪙 Mint Controls + Preview -->
-        <div class="flex flex-col gap-4 items-center">
+        <!-- 🪙 Mint Controls -->
+        <div class="flex flex-row justify-between my-3">
+          <div
+            class="my-auto font-semibold px-10 py-2 font-bold rounded-sm border"
+          >
+            {{ color }}
+          </div>
+
+          <!-- Connect button -->
+          <appkit-button v-if="!isConnected" label="Connect Wallet" />
+
+          <!-- <button
+            class="px-10 py-2 font-bold rounded-sm border hover:bg-gray-100 cursor-pointer"
+            @click="openConnectModal"
+          >
+            Connect Wallet
+          </button> -->
+
+          <!-- Mint button -->
           <button
-            class="px-5 py-3 rounded-lg font-semibold text-white bg-gray-900 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+            v-if="isConnected"
+            class="px-10 py-2 font-bold rounded-sm border hover:bg-gray-100 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
             :disabled="
               !isConnected || isMinting || availability !== '✅ Available'
             "
             @click="mintNFT"
           >
-            {{ isMinting ? "Minting..." : "Mint NFT" }}
+            {{ isMinting ? "Minting..." : "Buy for 0.001ETH" }}
           </button>
-
-          <p v-if="status" class="text-sm text-gray-600">{{ status }}</p>
-
-          <!-- 🖼 Preview square -->
-          <div
-            class="w-[400px] h-[400px] rounded-xl shadow-lg border border-gray-200"
-            :style="{ backgroundColor: color }"
-          />
         </div>
+
+        <div v-if="status" class="flex justify-center my-3">
+          {{ status }}
+        </div>
+
+        <div
+          v-if="availability !== '✅ Available'"
+          class="flex justify-center"
+          :class="
+            availability === '✅ Available' ? 'text-green-600' : 'text-red-600'
+          "
+        >
+          {{ availability }}
+        </div>
+        <!-- 🖼 Preview square -->
+        <div
+          class="w-[500px] h-[500px] rounded-xl shadow-lg border border-gray-200"
+          :style="{ backgroundColor: color }"
+        />
       </div>
     </div>
   </client-only>
@@ -219,7 +232,8 @@ async function mintNFT() {
     const tx = await contract.mint(color.value, { value: price });
     await tx.wait();
 
-    status.value = `✅ NFT minted! Your address: ${address.value}`;
+    // status.value = `✅ NFT minted! Your address: ${address.value}`;
+    status.value = `✅ NFT minted!`;
   } catch (err) {
     console.error(err);
     status.value = "Error: " + (err.reason || err.message);
