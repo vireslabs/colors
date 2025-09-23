@@ -10,11 +10,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function main() {
-  const rpcUrl = process.env.SEPOLIA_RPC_URL;
-  const privateKey = process.env.SEPOLIA_PRIVATE_KEY;
+  // const rpcUrl = process.env.SEPOLIA_RPC_URL;
+  const rpcUrl = process.env.MONAD_RPC_URL;
+  const privateKey = process.env.PRIVATE_KEY;
 
   if (!rpcUrl || !privateKey) {
-    throw new Error("❌ Missing SEPOLIA_RPC_URL or SEPOLIA_PRIVATE_KEY");
+    throw new Error("❌ Missing SEPOLIA_RPC_URL or PRIVATE_KEY");
   }
 
   const provider = new ethers.JsonRpcProvider(rpcUrl);
