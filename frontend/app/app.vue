@@ -213,7 +213,12 @@ onMounted(async () => {
   await nextTick();
 
   const res = await fetch("/abi/ColorsNFT.json");
-  abi.value = await res.json();
+  // abi.value = await res.json();
+  // console.log(abi.value);
+
+  const artifact = await res.json();
+  abi.value = artifact.abi || artifact;
+  console.log("✅ ABI loaded", abi.value);
 
   const canvas = paletteRef.value;
   if (!canvas) {
