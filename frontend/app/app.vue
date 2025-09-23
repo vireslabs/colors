@@ -125,7 +125,7 @@ import { ref, computed, onMounted, watch, nextTick } from "vue";
 import { BrowserProvider, Contract } from "ethers";
 import { useAppKitAccount, useAppKit } from "@reown/appkit/vue";
 // import abi from "@/abi/ColorsNFT.json";
-
+console.log("✅ app.vue script loaded");
 const abi = ref(null);
 
 // 🔌 Account info
@@ -210,6 +210,7 @@ const openConnectModal = () => {
 };
 
 onMounted(async () => {
+  console.log("✅ onMounted loaded");
   await nextTick();
 
   const res = await fetch("/abi/ColorsNFT.json");
