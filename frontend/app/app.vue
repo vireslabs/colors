@@ -124,7 +124,7 @@
 import { ref, computed, onMounted, watch, nextTick } from "vue";
 import { BrowserProvider, Contract } from "ethers";
 import { useAppKitAccount, useAppKit } from "@reown/appkit/vue";
-import abi from "~/abi/ColorsNFT.json";
+import abi from "@/abi/ColorsNFT.json";
 
 // 🔌 Account info
 const account = useAppKitAccount("eip155:11155111");
