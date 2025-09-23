@@ -27,6 +27,7 @@ async function main() {
     __dirname,
     "..",
     "frontend",
+    "public",
     "abi",
     "ColorsNFT.json"
   );
@@ -36,6 +37,7 @@ async function main() {
     __dirname,
     "..",
     "frontend",
+    "public",
     "abi",
     "contract-address.json"
   );
