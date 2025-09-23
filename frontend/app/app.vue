@@ -124,8 +124,6 @@
 import { ref, computed, onMounted, watch, nextTick } from "vue";
 import { BrowserProvider, Contract } from "ethers";
 import { useAppKitAccount, useAppKit } from "@reown/appkit/vue";
-// import abi from "@/abi/colorsNFT.json";
-console.log("✅ app.vue script loaded");
 const abi = ref(null);
 
 // 🔌 Account info
@@ -210,16 +208,11 @@ const openConnectModal = () => {
 };
 
 onMounted(async () => {
-  console.log("✅ onMounted loaded");
   await nextTick();
 
   const res = await fetch("/abi/colorsNFT.json");
-  // abi.value = await res.json();
-  // console.log(abi.value);
-
   const artifact = await res.json();
   abi.value = artifact.abi || artifact;
-  console.log("✅ ABI loaded", abi.value);
 
   const canvas = paletteRef.value;
   if (!canvas) {
@@ -250,8 +243,6 @@ onMounted(async () => {
   whiteGradient.addColorStop(1, "rgba(0,0,0,1)");
   ctx.fillStyle = whiteGradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  console.log("✅ gradient drawn");
 });
 
 watch(color, async newColor => {
