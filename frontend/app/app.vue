@@ -5,10 +5,10 @@
         class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_center,_#ff0607,_#ff8c00,_#ffff00,_#00ff00,_#00cfff,_#0000ff,_#8a2be2,_#ed84ed)] bg-[length:400%_400%] animate-gradient-chaos"
       ></div>
       <div
-        class="rounded-2xl bg-white/70 backdrop-blur-md border border-white/30 shadow-lg max-w-5xl w-fit mx-auto my-10 px-10 flex flex-col gap-6 items-center"
+        class="flex md:flex-col justify-center items-center rounded-2xl bg-white/70 backdrop-blur-md border border-white/30 shadow-lg md:max-w-5xl md:w-fit mx-auto my-10 px-2 md:px-10"
       >
         <div class="my-6">
-          <div class="flex justify-between mb-3">
+          <div class="flex flex-col md:flex-row justify-between mb-3">
             <h1
               class="text-3xl font-bold text-transparent bg-clip-text drop-shadow-xl text-shadow-md uppercase bg-[radial-gradient(circle_at_center,_#ff0607,_#ff8c00,_#ffff00,_#00ff00,_#00cfff,_#0000ff,_#8a2be2,_#ed84ed)]"
             >
@@ -25,9 +25,7 @@
             <div class="relative">
               <canvas
                 ref="paletteRef"
-                width="500"
-                height="300"
-                class="rounded-lg cursor-crosshair"
+                class="rounded-lg cursor-crosshair w-full h-40 md:w-[500px] md:h-[300px]"
                 @mousedown="onMouseDown"
               />
 
@@ -44,23 +42,25 @@
           </div>
 
           <!-- 🪙 Mint Controls -->
-          <div class="flex flex-row justify-between my-3">
+          <div
+            class="flex flex-col md:flex-row justify-between my-3 place-content-around"
+          >
             <div
-              class="flex justify-center place-items-center my-auto w-40 h-10 font-semibold border rounded-sm shadow-xl bg-white"
+              class="flex justify-center place-items-center my-auto w-full md:w-40 h-10 font-semibold border rounded-sm shadow-xl bg-white"
             >
               {{ color }}
             </div>
 
             <a
               href=""
-              class="flex justify-center place-items-center my-auto text-xl w-10 h-10 rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
+              class="flex justify-center place-items-center my-2 md:y-auto text-xl w-full md:w-10 h-10 rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
             >
               🖼️
             </a>
 
             <button
               @click="pickRandomColor"
-              class="flex justify-center place-items-center my-auto text-xl w-10 h-10 rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
+              class="flex justify-center place-items-center my-2 md:y-auto text-xl w-full md:w-10 h-10 rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
             >
               🤪
             </button>
@@ -68,7 +68,7 @@
             <!-- Connect button -->
             <button
               v-if="!isConnected"
-              class="px-10 py-2 font-bold rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
+              class="px-10 py-2 font-bold rounded-sm border my-2 md:my-auto hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
               @click="openConnectModal"
             >
               Connect Wallet
@@ -77,7 +77,7 @@
             <!-- Mint button -->
             <button
               v-if="isConnected"
-              class="flex justify-center place-items-center my-auto w-60 h-10 font-semibold border rounded-sm hover:bg-gray-100 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed shadow-xl bg-white/80"
+              class="flex justify-center place-items-center my-2 md:y-auto w-full md:w-60 h-10 font-semibold border rounded-sm hover:bg-gray-100 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed shadow-xl bg-white/80"
               :disabled="
                 !isConnected || isMinting || availability !== '✅ Available'
               "
@@ -111,7 +111,7 @@
           </div>
           <!-- 🖼 Preview square -->
           <div
-            class="w-[500px] h-[500px] rounded-xl shadow-lg border border-gray-200"
+            class="w-full h-40 md:w-[500px] md:h-[500px] rounded-xl shadow-lg border border-gray-200"
             :style="{ backgroundColor: color }"
           />
         </div>
@@ -124,8 +124,6 @@
 import { ref, computed, onMounted, watch, nextTick } from "vue";
 import { BrowserProvider, Contract } from "ethers";
 import { useAppKitAccount, useAppKit } from "@reown/appkit/vue";
-// import abi from "@/abi/colorsNFT.json";
-console.log("✅ app.vue script loaded");
 const abi = ref(null);
 
 // 🔌 Account info
@@ -210,16 +208,11 @@ const openConnectModal = () => {
 };
 
 onMounted(async () => {
-  console.log("✅ onMounted loaded");
   await nextTick();
 
   const res = await fetch("/abi/colorsNFT.json");
-  // abi.value = await res.json();
-  // console.log(abi.value);
-
   const artifact = await res.json();
   abi.value = artifact.abi || artifact;
-  console.log("✅ ABI loaded", abi.value);
 
   const canvas = paletteRef.value;
   if (!canvas) {
@@ -250,8 +243,6 @@ onMounted(async () => {
   whiteGradient.addColorStop(1, "rgba(0,0,0,1)");
   ctx.fillStyle = whiteGradient;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  console.log("✅ gradient drawn");
 });
 
 watch(color, async newColor => {
