@@ -253,7 +253,7 @@ watch(color, async newColor => {
   try {
     const provider = new BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
-    const contract = new Contract(contractAddress, abi, signer);
+    const contract = new Contract(contractAddress, abi.value, signer);
 
     const taken = await contract.isColorTaken(newColor);
     if (taken) {
@@ -284,7 +284,7 @@ async function mintNFT() {
 
     const provider = new BrowserProvider(window.ethereum);
     const signer = await provider.getSigner();
-    const contract = new Contract(contractAddress, abi, signer);
+    const contract = new Contract(contractAddress, abi.value, signer);
 
     status.value = "Sending transaction...";
     isMinting.value = true;
