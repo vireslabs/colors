@@ -9,8 +9,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      // projectId: process.env.NUXT_PROJECT_ID,
-      projectId: import.meta.env.NUXT_PROJECT_ID,
+      // projectId: process.env.NUXT_PUBLIC_PROJECT_ID,
+      projectId: import.meta.env.NUXT_PUBLIC_PROJECT_ID,
       // contractAddress: process.env.NUXT_PUBLIC_CONTRACT_ADDRESS,
       contractAddress: import.meta.env.NUXT_PUBLIC_CONTRACT_ADDRESS,
     },
