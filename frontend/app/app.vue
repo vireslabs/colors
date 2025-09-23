@@ -124,7 +124,7 @@
 import { ref, computed, onMounted, watch, nextTick } from "vue";
 import { BrowserProvider, Contract } from "ethers";
 import { useAppKitAccount, useAppKit } from "@reown/appkit/vue";
-// import abi from "@/abi/ColorsNFT.json";
+// import abi from "@/abi/colorsNFT.json";
 console.log("✅ app.vue script loaded");
 const abi = ref(null);
 
@@ -213,7 +213,7 @@ onMounted(async () => {
   console.log("✅ onMounted loaded");
   await nextTick();
 
-  const res = await fetch("/abi/сolorsNFT.json");
+  const res = await fetch("/abi/colorsNFT.json");
   // abi.value = await res.json();
   // console.log(abi.value);
 
