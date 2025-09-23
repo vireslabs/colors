@@ -39,8 +39,8 @@ export default defineNuxtPlugin(() => {
     metadata: {
       name: "Monad Colors",
       description: "The 1/1 collection for every color on the internet",
-      url: "https://colors-puce.vercel.app",
-      icons: ["https://colors-puce.vercel.app/favicon.ico"],
+      url: "https://www.monadcolors.art",
+      icons: ["https://www.monadcolors.art/favicon.ico"],
     },
     features: {
       analytics: false,
