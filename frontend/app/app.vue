@@ -124,7 +124,9 @@
 import { ref, computed, onMounted, watch, nextTick } from "vue";
 import { BrowserProvider, Contract } from "ethers";
 import { useAppKitAccount, useAppKit } from "@reown/appkit/vue";
-import abi from "./abi/ColorsNFT.json";
+// import abi from "@/abi/ColorsNFT.json";
+
+const abi = ref(null);
 
 // 🔌 Account info
 const account = useAppKitAccount("eip155:11155111");
@@ -209,6 +211,10 @@ const openConnectModal = () => {
 
 onMounted(async () => {
   await nextTick();
+
+  const res = await fetch("/abi/ColorsNFT.json");
+  abi.value = await res.json();
+
   const canvas = paletteRef.value;
   if (!canvas) {
     console.error("❌ Canvas still not found");
