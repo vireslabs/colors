@@ -213,7 +213,7 @@ onMounted(async () => {
   console.log("✅ onMounted loaded");
   await nextTick();
 
-  const res = await fetch("/abi/ColorsNFT.json");
+  const res = await fetch("/abi/сolorsNFT.json");
   // abi.value = await res.json();
   // console.log(abi.value);
 
