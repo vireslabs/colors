@@ -23,11 +23,15 @@
           <!-- 🎨 Color Picker -->
           <div class="flex flex-col items-center gap-4">
             <div class="relative">
-              <canvas
-                ref="paletteRef"
-                class="rounded-lg cursor-crosshair w-full h-40 md:w-[500px] md:h-[300px]"
-                @mousedown="onMouseDown"
-              />
+              <div class="w-full md:w-[500px]">
+                <canvas
+                  width="500"
+                  height="300"
+                  ref="paletteRef"
+                  class="rounded-lg cursor-crosshair w-full h-auto"
+                  @mousedown="onMouseDown"
+                />
+              </div>
 
               <!-- 🔘 Marker -->
               <div
