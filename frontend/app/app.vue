@@ -87,7 +87,7 @@
               "
               @click="mintNFT"
             >
-              {{ isMinting ? "Minting..." : "Buy for 0.001ETH" }}
+              {{ isMinting ? "Minting..." : "Buy for 100 MON" }}
             </button>
           </div>
 
