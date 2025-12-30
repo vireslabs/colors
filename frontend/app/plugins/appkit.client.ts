@@ -32,9 +32,35 @@ export default defineNuxtPlugin(() => {
     testnet: true,
   };
 
+    const monadMainnet = {
+        id: 143,
+        name: "Monad Mainnet",
+        network: "monad-mainnet",
+        nativeCurrency: {
+            name: "Monad",
+            symbol: "MON",
+            decimals: 18,
+        },
+        rpcUrls: {
+            default: {
+                http: ["https://rpc.monad.xyz"],
+            },
+            public: {
+                http: ["https://rpc.monad.xyz"],
+            },
+        },
+        blockExplorers: {
+            default: {
+                name: "Monad Explorer",
+                url: "https://monadvision.com",
+            },
+        },
+        testnet: false,
+    };
+
   createAppKit({
     adapters: [new EthersAdapter()],
-    networks: [monadTestnet],
+    networks: [monadMainnet],
     projectId: config.public.projectId,
     metadata: {
       name: "Monad Colors",
