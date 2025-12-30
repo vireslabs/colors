@@ -10,7 +10,7 @@ You choose the color (e.g. `#ff0000`), and that color becomes:
 
 - Mint a unique NFT by choosing any color in the `#RRGGBB` format.
 - All artwork and metadata are stored fully **on-chain**.
-- Mint price: **0.001 ETH** on the **Sepolia testnet**.
+- Mint price: **100 MON** on the **Monad Mainnet**.
 - Colors are unique — the same color cannot be minted twice.
 
 ## 🌐 How to use
@@ -23,18 +23,18 @@ You choose the color (e.g. `#ff0000`), and that color becomes:
 
 ## 🪙 Price
 
-- Each NFT costs **0.001 ETH**.
+- Each NFT costs **100 MON**.
 - Payment is made directly when minting.
 
 ## 📦 Where to see your NFT
 
 - After minting, your NFT will show up in your wallet.
-- You can also view it on [OpenSea Testnet](https://testnets.opensea.io/) or any NFT explorer that supports the **Sepolia** network.
+- You can also view it on [OpenSea](https://opensea.io/collection/colorsnft-323190310) or any NFT explorer that supports the **Monad** network.
 
 ## ℹ️ Requirements
 
 - A crypto wallet installed (e.g. [MetaMask](https://metamask.io/)).
-- Some test ETH on the Sepolia network (can be obtained from a faucet).
+- Some MON on the Monad network.
 - A supported browser (Chrome, Firefox, Brave, etc.).
 
 ## 📄 License
