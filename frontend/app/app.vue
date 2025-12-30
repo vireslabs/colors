@@ -91,7 +91,7 @@
             </button>
           </div>
 
-          <div v-if="status" class="flex justify-center font-semibold my-3">
+          <div v-if="status" class="flex flex-col text-center justify-center font-semibold my-3">
             <p>{{ status }}</p>
             <a v-if="txUrl" :href="txUrl" target="_blank" class="text-accent underline">
               View on Explorer
@@ -300,8 +300,7 @@ async function mintNFT() {
 
     // status.value = `✅ NFT minted! Your address: ${address.value}`;
     status.value = `✅ NFT minted!`;
-    txUrl.value = 'https://opensea.io/item/monad/0x18af5e511bb958a5506ddcf471ccd2af4d0a448c/2'
-    console.log('tx:', tx)
+    txUrl.value = 'https://opensea.io/collection/colorsnft-323190310'
   } catch (err) {
     console.error(err);
     status.value = "Error: " + (err.reason || err.message);
