@@ -56,7 +56,7 @@
             </div>
 
             <button
-                @click="pickRandomColor"
+              @click="pickRandomColor"
               class="flex justify-center place-items-center my-2 md:y-auto text-xl w-full md:w-10 h-10 rounded-sm border hover:bg-gray-100 cursor-pointer shadow-xl bg-white/80"
             >
               🖼️
