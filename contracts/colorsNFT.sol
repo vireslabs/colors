@@ -10,7 +10,8 @@ contract ColorsNFT is ERC721, Ownable {
     using Strings for uint256;
 
     uint256 public nextTokenId = 1;
-    uint256 public mintPrice = 0.001 ether;
+    uint256 public mintPrice = 100 ether; // 100 MON
+
 
     mapping(uint256 => string) private _colorOf;
 
@@ -26,7 +27,7 @@ contract ColorsNFT is ERC721, Ownable {
     {}
 
     function mint(string calldata hexColor) external payable {
-        require(msg.value == mintPrice, "Incorrect ETH amount");
+        require(msg.value == mintPrice, "Incorrect MON amount");
         require(_isValidHexColor(hexColor), "Invalid color, expected #RRGGBB");
 
         string memory normalized = _toLower(hexColor);
