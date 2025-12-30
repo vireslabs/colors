@@ -94,7 +94,7 @@
           <div v-if="status" class="flex flex-col text-center justify-center font-semibold my-3">
             <p>{{ status }}</p>
             <a v-if="txUrl" :href="txUrl" target="_blank" class="text-accent underline">
-              View on Explorer
+              View on Opensea
             </a>
           </div>
 
